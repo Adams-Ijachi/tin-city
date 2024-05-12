@@ -56,7 +56,10 @@
             <div class="card-content">
                 <div class="flex items-center justify-between">
 
-                    MAP
+                    <a href="{{ route('view-location.vehicle') }}">
+                        View Bus Live Location
+                    </a>
+
                 </div>
             </div>
         </div>

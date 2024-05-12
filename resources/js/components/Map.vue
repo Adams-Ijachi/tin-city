@@ -28,7 +28,8 @@ const getVehicleLocation = () =>{
 
     if (data.status === 'failure'){
       console.log('Error:', data.error);
-      // alert("Something went wrong, please try again");
+      alert("Something went wrong, please try again");
+      window.location.href = '/';
       loading.value = true;
     }
 
@@ -83,7 +84,7 @@ onBeforeUnmount(() => {
       api-key=""
       style="width: 100%; height: 440px"
       :center="mapCenter"
-      :zoom="15">
+      :zoom="20">
 
     <InfoWindow
         v-if="activeVehicle"
@@ -104,10 +105,7 @@ onBeforeUnmount(() => {
       </div>
     </InfoWindow>
 
-
-    <CustomMarker     v-for="vehicle in vehicleLocations"
-                      @click="activeVehicle = vehicle"
-                      :key="vehicle.vehicleId"
+    <CustomMarker  v-for="vehicle in vehicleLocations" @click="activeVehicle = vehicle" :key="vehicle.vehicleId"
                       :options="{ position: getPosition(vehicle), label: vehicle.shortName,clickable: true,anchorPoint: 'BOTTOM_CENTER' }" >
       <div style="text-align: center">
         <div style="font-size: 1.125rem">{{vehicle.shortName}}</div>
@@ -115,5 +113,32 @@ onBeforeUnmount(() => {
       </div>
     </CustomMarker>
 
+    <h1 v-if="vehicleLocations.length === 0" style="text-align: center; margin-top: 20px">No vehicle found</h1>
   </GoogleMap>
+
+  <section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-col text-center w-full mb-20">
+        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Map</h1>
+        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">This is a map of the vehicle locations</p>
+      </div>
+    </div>
+  </section>
+
+  <table class="table-auto">
+    <thead>
+    <tr>
+      <th>Vechicle Name</th>
+      <th>Current Location</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="vehicle in vehicleLocations">
+      <td>{{vehicle.shortName}}</td>
+      <td>{{vehicle.address}}</td>
+    </tr>
+
+
+    </tbody>
+  </table>
 </template>

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class VehicleController extends Controller
 {
-    public function index(Vehicle $vehicle ,GetAllVehiclesAction $getAllVehiclesAction)
+    public function index(GetAllVehiclesAction $getAllVehiclesAction)
     {
         $vehicles = $getAllVehiclesAction->execute();
 
@@ -18,7 +18,7 @@ class VehicleController extends Controller
 
     public function getLocation(){
 
-        $response = new StreamedResponse(function () use () {
+        $response = new StreamedResponse(function ()  {
             while (true) {
                 try {
                     $location = (new GetVehicleLocationAction())->execute();
